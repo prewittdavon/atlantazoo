@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.io.IOException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 
 
@@ -48,6 +49,33 @@ public class AtlantaZoo extends Application {
 
   public static Scene login() {
     return scene;
+  }
+
+  public ArrayList getExhibit() {
+      String query = "select Distinct Name from Exhibits";
+      Connection con = null;
+      ArrayList<String> arr = new ArrayList<>();
+      try {
+          con = AtlantaZoo.conn();
+          Statement stmt = con.createStatement();
+          ResultSet rs = stmt.executeQuery(query);
+          while (rs.next()) {
+              arr.add(rs.getString("Name"));
+
+          }
+      } catch (Exception e) {
+          System.out.println(e.getMessage());
+      } finally {
+          try {
+
+              if(con != null) con.close();
+          } catch (Exception f) {
+
+          }
+          return arr;
+      }
+
+
   }
 
   public static Connection conn() throws Exception {
