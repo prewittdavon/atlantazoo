@@ -13,6 +13,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.beans.property.SimpleStringProperty;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import common.AtlantaZoo;
+import java.sql.Connection;
 
 public class SearchAnimal extends VBox {
 

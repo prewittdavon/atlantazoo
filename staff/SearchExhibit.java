@@ -51,21 +51,6 @@ public class SearchExhibit extends VBox {
       TableColumn nameCol = new TableColumn("Name");
       TableColumn timeCol = new TableColumn("Time");
       TableColumn numVisitsCol = new TableColumn("Num Visits");
-      // TableColumn nameCol = new TableColumn("Name");
-      // TableColumn sizeCol = new TableColumn("Size");
-      // TableColumn numAnimalsCol = new TableColumn("Num Animals");
-      // TableColumn waterFeatureCol = new TableColumn("Water Feature");
-
-      // ObservableList<Person> data =
-      //   FXCollections.observableArrayList(
-      //       new Person("Jacob", "Smith", "jacob.smith@example.com"),
-      //       new Person("Isabella", "Johnson", "isabella.johnson@example.com"),
-      //       new Person("Ethan", "Williams", "ethan.williams@example.com"),
-      //       new Person("Emma", "Jones", "emma.jones@example.com"),
-      //       new Person("Michael", "Brown", "michael.brown@example.com")
-      //   );
-      //
-      // table.getColumns().addAll(nameCol, sizeCol, numAnimalsCol, waterFeatureCol);
 
 
       table.getColumns().addAll(nameCol, timeCol, numVisitsCol);
@@ -82,5 +67,34 @@ public class SearchExhibit extends VBox {
         box.getChildren().addAll(label, dropDown);
         return box;
   }
+
+  // public void getData() {
+  //   String query = "select " +
+  //                  "* " +
+  //                  "from Exhibit_Info";
+  //   Connection con = null;
+  //   try {
+  //       con = AtlantaZoo.conn();
+  //       Statement stmt = con.createStatement();
+  //       ResultSet rs = stmt.executeQuery(query);
+  //
+  //       while (rs.next()) {
+  //           String name = rs.getString("Name");
+  //           String size = rs.getString("Size");
+  //           String animals = rs.getString("Animals");
+  //           String water = rs.getString("Water");
+  //           data.add(new Exhibit(name, size, animals, water));
+  //       }
+  //   } catch (Exception e) {
+  //       //JDBCTutorialUtilities.printSQLException(e);
+  //       System.out.println(e.getMessage());
+  //   } finally {
+  //     try {
+  //       if(con != null) con.close();
+  //     } catch (Exception f) {
+  //
+  //     }
+  //   }
+  // }
 
 }
