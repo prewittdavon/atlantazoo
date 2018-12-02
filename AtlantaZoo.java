@@ -51,7 +51,7 @@ public class AtlantaZoo extends Application {
     return scene;
   }
 
-  public ArrayList getExhibit() {
+  public static ArrayList getExhibit() {
       String query = "select Distinct Name from Exhibits";
       Connection con = null;
       ArrayList<String> arr = new ArrayList<>();
