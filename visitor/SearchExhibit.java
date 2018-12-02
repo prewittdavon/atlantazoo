@@ -51,7 +51,62 @@ public class SearchExhibit extends VBox {
       search.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-            //Implement
+            String nameField = nameLabel.getText();
+
+            VBox numAnBox1 = (VBox) numAnimals.getChildren().get(1);
+            ComboBox dropMin = (ComboBox) numAnBox1.getChildren().get(1);
+            String numAnimalsMin = (String) dropMin.getValue();
+
+            VBox numAnBox2 = (VBox) numAnimals.getChildren().get(2);
+            ComboBox dropMax = (ComboBox) numAnBox2.getChildren().get(1);
+            String numAnimalsMax = (String) dropMax.getValue();
+
+            VBox sizeBox1 = (VBox) size.getChildren().get(1);
+            ComboBox sdropMin = (ComboBox) sizeBox1.getChildren().get(1);
+            String sizeMin = (String) sdropMin.getValue();
+
+            VBox sizeBox2 = (VBox) size.getChildren().get(2);
+            ComboBox sdropMax = (ComboBox) sizeBox2.getChildren().get(1);
+            String sizeMax = (String) sdropMax.getValue();
+
+            VBox waterBox = (VBox) water.getChildren().get(1);
+            ComboBox waterF = (ComboBox) waterBox.getChildren().get(1);
+            String waterFeat = (String) waterF.getValue();
+
+            String query = " SELECT * FROM Exhibit_Info" +
+              " WHERE Name=" + nameField +
+              " AND Animals>=" + numAnimalsMin +
+              " AND Animals<=" + numAnimalsMax +
+              " AND Size>=" + sizeMin +
+              " AND Size<=" + sizeMax +
+              " AND Water=" + (waterFeat == "Yes");
+
+            data.clear();
+
+            Connection con = null;
+            try {
+                con = AtlantaZoo.conn();
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(query);
+
+                while (rs.next()) {
+                    String name = rs.getString("Name");
+                    String size = rs.getString("Size");
+                    String animals = rs.getString("Animals");
+                    String water = rs.getString("Water").equals("1") ? "Yes":"No";
+                    data.add(new Exhibit(name, size, animals, water));
+                }
+            } catch (Exception e) {
+                //JDBCTutorialUtilities.printSQLException(e);
+                System.out.println(e.getMessage());
+            } finally {
+              try {
+                if(con != null) con.close();
+              } catch (Exception f) {
+
+              }
+            }
+
         }
       });
 
