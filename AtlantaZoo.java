@@ -31,7 +31,7 @@ public class AtlantaZoo extends Application {
   public void start(Stage ps) throws Exception {
     primaryStage = ps;
 
-    StackPane root = new StackPane(new LoginPane());
+    StackPane root = new StackPane(new common.LoginPane());
 
     scene = new Scene(root, 500, 450);
     //
@@ -103,7 +103,7 @@ public class AtlantaZoo extends Application {
 
   public static Connection conn() throws Exception {
       Class.forName("com.mysql.jdbc.Driver").newInstance();
-      con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_group83?useSSL=false", "cs4400_group83", "");
+      con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_group83?useSSL=false", "cs4400_group83", "ZgC0kr8a");
       if(!con.isClosed()) System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
       return con;
   }
