@@ -26,6 +26,9 @@ public class ViewAssignedShows extends VBox {
       TableColumn timeCol = new TableColumn("Size");
       TableColumn exhibitsCol = new TableColumn("Exhibits");
 
+      VBox nameBox = new VBox();
+      VBox dtBox = new VBox();
+      VBox exhbBox = new VBox();
       // TableColumn nameCol = new TableColumn("Name");
       // TableColumn sizeCol = new TableColumn("Size");
       // TableColumn numAnimalsCol = new TableColumn("Num Animals");
@@ -45,6 +48,43 @@ public class ViewAssignedShows extends VBox {
 
       table.getColumns().addAll(nameCol, timeCol, exhibitsCol);
       this.getChildren().addAll(title, table);
+
+      ArrayList<String> name = new ArrayList<>();
+      ArrayList<String> dt = new ArrayList<>();
+      ArrayList<String> exhb = new ArrayList<>();
+
+      public void getData() {
+        String query = "select " +
+                       "* " +
+                       "from Shows" +
+                       "where "; //TODO get the instance of staff
+        Connection con = null;
+        try {
+            con = AtlantaZoo.conn();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                name.add(rs.getString("Name"));
+                dt.add(rs.getString("dt"));
+                exhb.add(rs.getString("Exhibit"));
+            }
+        } catch (Exception e) {
+            //JDBCTutorialUtilities.printSQLException(e);
+            System.out.println(e.getMessage());
+        } finally {
+          try {
+            if(con != null) con.close();
+          } catch (Exception f) {
+
+          }
+        }
+      }
+
+      nameBox.getChildren.addAll(name);
+      dtBox.getChildren.addAll(dt);
+      exhbBox.getChildren.addAll(exhb);
+
 
   }
 

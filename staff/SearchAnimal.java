@@ -29,16 +29,16 @@ public class SearchAnimal extends VBox {
       HBox exhibit = new HBox();
       Label exhibitLabel = new Label("Exhibit");
       ComboBox<String> exhibitDropDown = new ComboBox<String>();
-      exhibitDropDown.getItems().addAll("Yes", "No");
+      exhibitDropDown.getItems().addAll(AtlantaZoo.getExhibit());
       exhibit.getChildren().addAll(exhibitLabel, exhibitDropDown);
 
       Label nameLabel = new Label("Name");
-      TextField nameText = new TextField ();
+      TextField nameText = new TextField();
       HBox name = new HBox();
       name.getChildren().addAll(nameLabel, nameText);
 
       Label speciesLabel = new Label("Species");
-      TextField speciesText = new TextField ();
+      TextField speciesText = new TextField();
       HBox species = new HBox();
       species.getChildren().addAll(speciesLabel, speciesText);
 
@@ -49,7 +49,7 @@ public class SearchAnimal extends VBox {
       HBox type = new HBox();
       Label typeLabel = new Label("Type");
       ComboBox<String> typeDropDown = new ComboBox<String>();
-      typeDropDown.getItems().addAll("Yes", "No");
+      typeDropDown.getItems().addAll(AtlantaZoo.getAnimal());
       type.getChildren().addAll(typeLabel, typeDropDown);
 
       Button search = new Button();
@@ -57,9 +57,44 @@ public class SearchAnimal extends VBox {
       search.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-            //Implement
+
         }
       });
+
+      public ArrayList getResults() {
+          String name = "";
+          String exhb = "";
+          String spec = "";
+          if (nameText != null ? name = nameText.getText() + "from Name" : name = "");
+          if (exhibitDropDown != null ? exhb = exhibitDropDown.getValue() + "from Exhibit" : exhb = "");
+          // TODO AGE implementation with the dropdown
+          if (speciesLabel.getText() != null ? spec = speciesLabel.getText() : spec = "");
+
+          String query = "select * from Animals where " + name + exhb + spec;
+
+          ;
+          Connection con = null;
+          ArrayList<String> arr = new ArrayList<>();
+          try {
+              con = AtlantaZoo.conn();
+              Statement stmt = con.createStatement();
+              ResultSet rs = stmt.executeQuery(query);
+              while (rs.next()) {
+                  arr.add(rs.getString("Name"));
+
+              }
+          } catch (Exception e) {
+              System.out.println(e.getMessage());
+          } finally {
+              try {
+
+                  if(con != null) con.close();
+              } catch (Exception f) {
+
+              }
+              return arr;
+          }
+      }
 
 
       HBox row1 = new HBox();
