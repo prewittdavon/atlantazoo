@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
+// import javafx.;
 
 public class SearchExhibit extends VBox {
 
@@ -21,14 +22,15 @@ public class SearchExhibit extends VBox {
 
 
       Label nameLabel = new Label("Name");
-      TextField nameText = new TextField ();
+      TextField nameText = new TextField();
       HBox name = new HBox();
       name.getChildren().addAll(nameLabel, nameText);
 
-      HBox numVisits = new HBox();
-      numVisits.getChildren().addAll(new Label("Num Visits"), dropDown("Min", 0, 10), dropDown("Max", 0, 10));
+      HBox numAnimal = new HBox();
+      numAnimal.getChildren().addAll(new Label("Num Animals"), dropDown("Min", 0, 20), dropDown("Max", 0, 20));
 
-      DatePicker time = new DatePicker();
+      HBox size = new HBox();
+      size.getChildren().addAll(new Label("Size"), dropDown("Min", 0, 500), dropDown("Max", 0, 500));
 
       Button search = new Button();
       search.setText("Search");
@@ -39,11 +41,15 @@ public class SearchExhibit extends VBox {
         }
       });
 
+      HBox waterFeature = new HBox();
+      MenuButton menu = new MenuButton("None Selected");
+      waterFeature.getChildren().addAll(new Label("Water Feature"), dropDown("Yes", "No"));
+
       HBox row1 = new HBox();
-      row1.getChildren().addAll(name, numVisits);
+      row1.getChildren().addAll(name, numAnimal);
 
       HBox row2 = new HBox();
-      row2.getChildren().addAll(time, search);
+      row2.getChildren().addAll(search);
 
 
       TableView table = new TableView();
@@ -68,33 +74,33 @@ public class SearchExhibit extends VBox {
         return box;
   }
 
-  // public void getData() {
-  //   String query = "select " +
-  //                  "* " +
-  //                  "from Exhibit_Info";
-  //   Connection con = null;
-  //   try {
-  //       con = AtlantaZoo.conn();
-  //       Statement stmt = con.createStatement();
-  //       ResultSet rs = stmt.executeQuery(query);
-  //
-  //       while (rs.next()) {
-  //           String name = rs.getString("Name");
-  //           String size = rs.getString("Size");
-  //           String animals = rs.getString("Animals");
-  //           String water = rs.getString("Water");
-  //           data.add(new Exhibit(name, size, animals, water));
-  //       }
-  //   } catch (Exception e) {
-  //       //JDBCTutorialUtilities.printSQLException(e);
-  //       System.out.println(e.getMessage());
-  //   } finally {
-  //     try {
-  //       if(con != null) con.close();
-  //     } catch (Exception f) {
-  //
-  //     }
-  //   }
-  // }
+  public void getData() {
+    String query = "select " +
+                   "* " +
+                   "from Exhibit_Info";
+    Connection con = null;
+    try {
+        con = AtlantaZoo.conn();
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+
+        while (rs.next()) {
+            String name = rs.getString("Name");
+            String size = rs.getString("Size");
+            String animals = rs.getString("Animals");
+            String water = rs.getString("Water");
+            data.add(new Exhibit(name, size, animals, water));
+        }
+    } catch (Exception e) {
+        //JDBCTutorialUtilities.printSQLException(e);
+        System.out.println(e.getMessage());
+    } finally {
+      try {
+        if(con != null) con.close();
+      } catch (Exception f) {
+
+      }
+    }
+  }
 
 }

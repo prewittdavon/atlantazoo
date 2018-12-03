@@ -74,8 +74,31 @@ public class AtlantaZoo extends Application {
           }
           return arr;
       }
+  }
 
+  public static ArrayList getAnimal() {
+      String query = "select Distinct Name from Animal";
+      Connection con = null;
+      ArrayList<String> arr = new ArrayList<>();
+      try {
+          con = AtlantaZoo.conn();
+          Statement stmt = con.createStatement();
+          ResultSet rs = stmt.executeQuery(query);
+          while (rs.next()) {
+              arr.add(rs.getString("Name"));
 
+          }
+      } catch (Exception e) {
+          System.out.println(e.getMessage());
+      } finally {
+          try {
+
+              if(con != null) con.close();
+          } catch (Exception f) {
+
+          }
+          return arr;
+      }
   }
 
   public static Connection conn() throws Exception {
