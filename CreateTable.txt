@@ -1,0 +1,75 @@
+Create table Admin (
+Username varchar(255),
+Primary Key(Username),
+Foreign Key(Username) references User(Username) on update cascade
+);
+
+create table Staff (
+Username varchar(255),
+Primary key(Username),
+Foreign Key(Username) references User(Username)
+)
+
+create table Animal (
+Name varchar(255),
+Species varchar(255),
+Type varchar(255) not null,
+Age int not null,
+Exhibit varchar(255),
+primary key(Name, Species),
+foreign key(Exhibit) references Exhibit(Name) on delete set null
+);
+
+CREATE TABLE Visit_Exhibit (
+	Exhibit varchar(255),
+	Visitor varchar(255),
+	dt DateTime,
+	PRIMARY KEY(Exhibit, Visitor, dt),
+	FOREIGN KEY(Exhibit) REFERENCES Exhibit(Name)
+	ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(Visitor) REFERENCES Visitor(Username)
+	ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE Visit_Show (
+	ShowName varchar(255),
+	dt DateTime,
+	Visitor varchar(255),
+	PRIMARY KEY(ShowName, dt, Visitor),
+	FOREIGN KEY(ShowName, dt) REFERENCES Shows(Name, dt)
+	ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(Visitor) REFERENCES Visitor(Username)
+	ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE Animal_Care (
+	Animal varchar(255),
+	Species varchar(255),
+	Staff_Member varchar(255),
+	dt DateTime,
+	Note varchar(255) NOT NULL,
+	PRIMARY KEY(Animal, Species, Staff_Member, dt),
+	FOREIGN KEY(Species) REFERENCES Animal(Name)
+	ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(Staff_Member) REFERENCES Staff(	Username)
+	ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Exhibit (
+	Name varchar(255),
+	Water_Feature boolean NOT NULL,
+	Size int NOT NULL,
+	PRIMARY KEY(Name)
+);
+
+CREATE TABLE Shows (
+	Name varchar(255),
+	dt DateTime,
+	Host varchar(255) NOT NULL,
+	Exhibit varchar(255) NOT NULL,
+	PRIMARY KEY(Name, dt),
+	FOREIGN KEY(Host) REFERENCES Staff(Username)
+	ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(Exhibit) REFERENCES Exhibit(Name)
+	ON UPDATE CASCADE ON DELETE CASCADE
+);
